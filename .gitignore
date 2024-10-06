@@ -1,0 +1,62 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Dependency directories
+jspm_packages/
+.pnp/
+.pnp.js
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# dotenv environment variables file
+.env
+.env.test
+
+# Build output
+dist/
+build/
+out/
+
+# Coverage directory
+coverage/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+
+# Package files
+*.tgz
+
+# Yarn
+yarn-debug.log*
+yarn-error.log*
+.yarn-integrity
+
+# TypeScript
+*.tsbuildinfo
+
+# Mono repo specific
+lerna-debug.log
+packages/*/dist
+packages/*/node_modules
