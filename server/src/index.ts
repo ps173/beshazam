@@ -3,6 +3,7 @@ import { config } from "dotenv";
 import getAccessTokenAndRefreshTokenFromCode from "./spotify/getAccessTokenAndRefreshTokenFromCode";
 import generateRandomString from "./utils/generateRandomString";
 import querystring from "node:querystring";
+import prismaInstance from "./utils/prismaInstance";
 config();
 
 const app: Application = express();

@@ -2,6 +2,7 @@
   "scripts": {
     "start": "node dist/index.js",
     "dev": "nodemon --watch src -e ts --exec \"npm run build && npm run start\"",
+    "migrate": "prisma migrate dev",
     "build": "tsc"
   },
   "devDependencies": {
@@ -10,9 +11,11 @@
     "express": "^4.21.0",
     "nodemon": "^3.1.7",
     "ts-node": "^10.9.2",
+    "prisma": "5.22.0",
     "typescript": "^5.6.2"
   },
   "dependencies": {
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "@prisma/client": "5.22.0"
   }
 }
