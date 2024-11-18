@@ -4,14 +4,11 @@ import getAccessTokenAndRefreshTokenFromCode from "./spotify/getAccessTokenAndRe
 import generateRandomString from "./utils/generateRandomString";
 import querystring from "node:querystring";
 import prismaInstance from "./utils/prismaInstance";
+import { getUser } from "./spotify/getUser";
 config();
 
 const app: Application = express();
 const port = process.env.PORT || 3000;
-
-app.get("/", (req, res) => {
-  res.send("Hello from Express with TypeScript!");
-});
 
 app.get("/spotify/login", async (req, res) => {
   const state = generateRandomString(16);
@@ -35,11 +32,23 @@ app.get("/authenticate", async (req, res) => {
   const state = req.query.state as string;
   try {
     const data = await getAccessTokenAndRefreshTokenFromCode(code, state);
-    console.log({ data });
+    const spotifyUser = await getUser({
+      accessToken: data?.access_token,
+    });
+    const user = await prismaInstance.user.create({
+      data: {
+        name: spotifyUser.display_name,
+        email: spotifyUser.email,
+        accessToken: data?.access_token,
+        refreshToken: data?.refresh_token,
+      },
+    });
+
+    res.send(user.name);
   } catch (err: any) {
     res.status(400).send(err.message);
   }
-  // save token
+  // redirect to frontent with user-id in cookie
   res.send("OK");
 });
 
