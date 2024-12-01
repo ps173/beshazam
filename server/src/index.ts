@@ -5,6 +5,8 @@ import generateRandomString from "./utils/generateRandomString";
 import querystring from "node:querystring";
 import prismaInstance from "./utils/prismaInstance";
 import { getUser } from "./spotify/getUser";
+import { add } from "date-fns/add";
+import createUserFromSpotify from "./resolvers/createUserFromSpotify";
 config();
 
 const app: Application = express();
@@ -32,24 +34,19 @@ app.get("/authenticate", async (req, res) => {
   const state = req.query.state as string;
   try {
     const data = await getAccessTokenAndRefreshTokenFromCode(code, state);
-    const spotifyUser = await getUser({
+    const expiresAt = add(new Date(), {
+      seconds: data.expires_in,
+    });
+    const user = await createUserFromSpotify({
       accessToken: data?.access_token,
+      refreshToken: data?.refresh_token,
+      expiresAt: expiresAt,
     });
-    const user = await prismaInstance.user.create({
-      data: {
-        name: spotifyUser.display_name,
-        email: spotifyUser.email,
-        accessToken: data?.access_token,
-        refreshToken: data?.refresh_token,
-      },
-    });
-
-    res.send(user.name);
+    res.cookie("userId", user.id);
+    res.redirect(process.env.FRONTEND_URL as string);
   } catch (err: any) {
     res.status(400).send(err.message);
   }
-  // redirect to frontent with user-id in cookie
-  res.send("OK");
 });
 
 app.listen(port, () => {
