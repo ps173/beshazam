@@ -60,3 +60,5 @@ yarn-error.log*
 lerna-debug.log
 packages/*/dist
 packages/*/node_modules
+server/prisma/dev.db
+server/prisma/dev.db-journal

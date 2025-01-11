@@ -14,8 +14,18 @@ async function createUserFromSpotify({
     accessToken: accessToken,
   });
 
-  const user = await prismaInstance.user.create({
-    data: {
+  const user = await prismaInstance.user.upsert({
+    where: {
+      email: spotifyUser.email,
+    },
+    update: {
+      name: spotifyUser.display_name,
+      email: spotifyUser.email,
+      accessToken: accessToken,
+      refreshToken: refreshToken,
+      expiresAt: expiresAt,
+    },
+    create: {
       name: spotifyUser.display_name,
       email: spotifyUser.email,
       accessToken: accessToken,
