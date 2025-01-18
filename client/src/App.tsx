@@ -8,16 +8,16 @@ import {
 import { useCookies } from "react-cookie";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
-import Layout from "./components/Layout";
 import "@mantine/core/styles.css";
 
 import { MantineProvider } from "@mantine/core";
+import { Layout } from "./components/Layout";
 
 const App: React.FC = () => {
   const [cookies] = useCookies(["userId"]);
 
   return (
-    <MantineProvider defaultColorScheme="dark">
+    <MantineProvider defaultColorScheme="light">
       <Router>
         <Layout>
           <Routes>

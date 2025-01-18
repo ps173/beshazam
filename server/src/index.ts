@@ -3,8 +3,6 @@ import { config } from "dotenv";
 import getAccessTokenAndRefreshTokenFromCode from "./spotify/getAccessTokenAndRefreshTokenFromCode";
 import generateRandomString from "./utils/generateRandomString";
 import querystring from "node:querystring";
-import prismaInstance from "./utils/prismaInstance";
-import { getUser } from "./spotify/getUser";
 import { add } from "date-fns/add";
 import createUserFromSpotify from "./resolvers/createUserFromSpotify";
 config();
@@ -12,7 +10,7 @@ config();
 const app: Application = express();
 const port = process.env.PORT || 3000;
 
-app.get("/spotify/login", async (req, res) => {
+app.get("/spotify/login", async (_req, res) => {
   const state = generateRandomString(16);
   const scope = process.env.SPOTIFY_SCOPES as string;
   console.log({ state, scope });

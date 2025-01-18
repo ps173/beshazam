@@ -1,30 +1,68 @@
-import { Button, Flex } from "@mantine/core";
-import React from "react";
+import {
+  Stack,
+  Title,
+  Text,
+  Button,
+  Container,
+  Image,
+  Anchor,
+  Group,
+} from "@mantine/core";
+import icon from "../assets/icon.png";
+import { useCookies } from "react-cookie";
 
-const Dashboard: React.FC = () => {
-  const handleStartGame = () => {
-    // TODO: Implement game start logic
-    console.log("Start game clicked");
-  };
-
+export default function Dashboard() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_cookies, setCookies] = useCookies();
   return (
-    <Flex direction={"column"} gap={"sm"}>
-      <Button
-        onClick={handleStartGame}
-        style={{
-          backgroundColor: "#FFBB00",
-          color: "black",
-          padding: "10px 20px",
-          fontSize: "1rem",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-        }}
-      >
-        Start Game
-      </Button>
-    </Flex>
-  );
-};
+    <Container
+      size="sm"
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Stack align="center" gap="md" style={{ width: "100%" }}>
+        <Image src={icon} alt={icon} w={72} h={72} />
 
-export default Dashboard;
+        <Title order={1}>bam!</Title>
+
+        <Text
+          size="lg"
+          style={{
+            maxWidth: 400,
+            textAlign: "center",
+          }}
+        >
+          Guess the artist from the song name and snippet. Inspired/Copied from{" "}
+          <Anchor href="https://instagram.com/trackstarshow/">
+            @trackstarshow
+          </Anchor>
+        </Text>
+
+        <Group>
+          <Button size="md" radius="md" color="yellow">
+            Play
+          </Button>
+          <Button
+            size="md"
+            radius="md"
+            variant="outline"
+            color="red"
+            onClick={() => {
+              setCookies("userId", null);
+            }}
+          >
+            Logout
+          </Button>
+        </Group>
+        <Stack gap={"sm"} align="center" style={{ opacity: 0.7 }}>
+          <Text size="sm">January 18, 2025</Text>
+          <Text size="sm">Created by @mehmehsloth</Text>
+        </Stack>
+      </Stack>
+    </Container>
+  );
+}
